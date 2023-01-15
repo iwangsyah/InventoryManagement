@@ -2,6 +2,7 @@ import _ from "lodash";
 import { Box, Button, ScrollView, View } from "native-base";
 import React, { useState } from "react";
 import { Dimensions, FlatList, SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from "react-redux";
 import BaseButton from "../../components/BaseButton";
 import CategoryCard from "../../components/CategoryCard";
@@ -32,12 +33,14 @@ const ManageCategoryScreen = () => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <FlatList
-                data={categoryList}
-                renderItem={renderCategory}
-                keyExtractor={(_, index) => String(index)}
-                contentContainerStyle={{padding: 16}}
-            />
+            <KeyboardAwareScrollView>
+                <FlatList
+                    data={categoryList}
+                    renderItem={renderCategory}
+                    keyExtractor={(_, index) => String(index)}
+                    contentContainerStyle={{padding: 16}}
+                />
+            </KeyboardAwareScrollView>
             <View p='3' style={{backgroundColor: '#F5F5F5'}}>
                 <BaseButton title='ADD NEW CATEGORY' onPress={onAddNewCategory} />
             </View>

@@ -18,6 +18,7 @@ interface Props {
 const ItemCard: React.FC<Props> = ({item, index, categoryIndex}) => {
 
     const categoryList  = useSelector((state: RootState) => state.category.category)
+    
     const titleField = _.find(item.data, field => field.isTitle);
     
     const dispatch = useDispatch()

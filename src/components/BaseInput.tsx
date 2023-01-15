@@ -1,3 +1,4 @@
+import { KeyboardAvoidingView } from "native-base";
 import React, { forwardRef, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
 import DeleteIcon from "../icons/DeleteIcon";
@@ -15,7 +16,7 @@ export const BaseInput = forwardRef<Ref, InputProps>((props, ref) => {
   const [focus, setFocus] = useState<boolean>(false);
 
   return (
-    <View style={{marginTop: 10}}>
+   <View style={{marginTop: 10}}>
       <Text style={[styles.label, focus && {color: '#A000FF'}]}>{props.label || 'Field'}</Text>
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -35,7 +36,6 @@ export const BaseInput = forwardRef<Ref, InputProps>((props, ref) => {
         )}
       </View>
     </View>
-
   )
 })
 
