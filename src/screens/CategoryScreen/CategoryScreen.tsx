@@ -45,7 +45,7 @@ const CategoryScreen = ({route, navigation}: Props) => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16}}>
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16}}>
                 <Text numberOfLines={2} style={{flex: 1, fontSize: 26, fontWeight: 'bold'}}>{categoryList[categoryIndex].title}</Text>
                 <BaseButton title='ADD NEW ITEM' onPress={onAddNewItem} />
             </View>
