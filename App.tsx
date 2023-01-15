@@ -3,7 +3,7 @@
  * @format
  */
 
-import React, { Suspense } from "react";
+import React from "react";
 import 'react-native-gesture-handler';
 import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";

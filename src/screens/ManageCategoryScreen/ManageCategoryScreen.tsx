@@ -1,7 +1,7 @@
+import React from "react";
+import { Dimensions, FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { View } from "native-base";
 import _ from "lodash";
-import { Box, Button, ScrollView, View } from "native-base";
-import React, { useState } from "react";
-import { Dimensions, FlatList, SafeAreaView, StyleSheet, Text, TextInput } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from "react-redux";
 import BaseButton from "../../components/BaseButton";

@@ -4,7 +4,6 @@ import DashboardScreen from './DashboardScreen/DashboardScreen';
 import ManageCategoryScreen from './ManageCategoryScreen/ManageCategoryScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import CategoryScreen from './CategoryScreen/CategoryScreen';

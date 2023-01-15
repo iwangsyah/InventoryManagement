@@ -1,9 +1,8 @@
 import { Box, Text } from "native-base";
 import React from "react";
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { FlatList, Pressable, StyleSheet } from "react-native";
 import _ from 'lodash';
-import { CategoryItemProps, CateoryItemFieldProps, ItemDataProps, ItemProps } from "../interfaces/Category";
-import BaseButton from "./BaseButton";
+import { ItemDataProps, ItemProps } from "../interfaces/Category";
 import BaseInput from "./BaseInput";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
