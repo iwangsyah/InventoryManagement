@@ -50,7 +50,6 @@ const DashboardScreen = () => {
                     renderItem={({item, index} : {item: ItemProps, index: number}) => (
                         renderItem(item, index, categoryIndex)
                     )}
-                    contentContainerStyle={{paddingVertical: 16, paddingHorizontal: isTablet ? 0 : 16}}
                     keyExtractor={(_, index) => String(index)}
                     ListEmptyComponent={() => <Text style={styles.emptyText}>No items to display</Text>}
                 />
@@ -82,7 +81,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         alignItems: 'center', 
         justifyContent: 'space-between', 
-        paddingHorizontal: 16,
         paddingVertical: 8,
         borderBottomWidth: 1,
         borderColor: 'lightgrey'
