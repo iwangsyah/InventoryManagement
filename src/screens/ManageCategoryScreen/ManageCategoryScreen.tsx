@@ -8,9 +8,11 @@ import BaseButton from "../../components/BaseButton";
 import CategoryCard from "../../components/CategoryCard";
 import { CategoryItemProps } from "../../interfaces/Category";
 import { RootState } from "../../redux/store";
+import DeviceInfo from "react-native-device-info";
 
 const ManageCategoryScreen = () => {
     const categoryList  = useSelector((state: RootState) => state.category.category)
+    const isTablet = DeviceInfo.isTablet();
     const dispatch = useDispatch()
 
     const onAddNewCategory = () => {
@@ -35,10 +37,11 @@ const ManageCategoryScreen = () => {
         <SafeAreaView style={{flex: 1}}>
             <KeyboardAwareScrollView extraScrollHeight={20}>
                 <FlatList
+                    numColumns={isTablet ? 2 : 1}
                     data={categoryList}
                     renderItem={renderCategory}
                     keyExtractor={(_, index) => String(index)}
-                    contentContainerStyle={{padding: 16}}
+                    contentContainerStyle={{paddingVertical: 16, paddingHorizontal: isTablet ? 0 : 16}}
                 />
             </KeyboardAwareScrollView>
             <View p='3' style={{backgroundColor: '#F5F5F5'}}>

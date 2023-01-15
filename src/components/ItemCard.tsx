@@ -1,12 +1,15 @@
 import { Box, Text } from "native-base";
 import React from "react";
-import { FlatList, Pressable, StyleSheet } from "react-native";
+import { Dimensions, FlatList, Pressable, StyleSheet } from "react-native";
 import _ from 'lodash';
 import { ItemDataProps, ItemProps } from "../interfaces/Category";
 import BaseInput from "./BaseInput";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DeleteIcon from "../icons/DeleteIcon";
+import DeviceInfo from "react-native-device-info";
+
+const { width } = Dimensions.get('window');
 
 interface Props {
     item: ItemProps;
@@ -19,6 +22,8 @@ const ItemCard: React.FC<Props> = ({item, index, categoryIndex}) => {
     const categoryList  = useSelector((state: RootState) => state.category.category)
     
     const titleField = _.find(item.data, field => field.isTitle);
+
+    const isTablet = DeviceInfo.isTablet();
     
     const dispatch = useDispatch()
 
@@ -43,7 +48,7 @@ const ItemCard: React.FC<Props> = ({item, index, categoryIndex}) => {
         />
 
     return (
-        <Box backgroundColor='white' p='3' shadow='5' mb='3' borderRadius={6}>
+        <Box backgroundColor='white' p='3' shadow='5' mb='3' borderRadius={6} style={isTablet ? {width: width / 2 - 16, marginHorizontal: 8} : {flex: 1}}>
             <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>{titleField?.value || titleField?.name}</Text>
             <FlatList
                 data={item.data}

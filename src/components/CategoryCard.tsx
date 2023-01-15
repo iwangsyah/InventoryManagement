@@ -1,6 +1,6 @@
 import { Box, Text } from "native-base";
 import React, { useState } from "react";
-import { FlatList, Pressable, StyleSheet, View } from "react-native";
+import { Dimensions, FlatList, Pressable, StyleSheet, View } from "react-native";
 import Modal from 'react-native-modal';
 import _ from 'lodash';
 import { CategoryItemProps, CateoryItemFieldProps } from "../interfaces/Category";
@@ -9,17 +9,21 @@ import BaseInput from "./BaseInput";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import DeleteIcon from "../icons/DeleteIcon";
+import DeviceInfo from "react-native-device-info";
+
+const { width } = Dimensions.get('window');
 
 interface Props {
     item: CategoryItemProps;
     index: number
-  }
+}
 
 const CategoryCard: React.FC<Props> = ({item, index}) => {
     const [visible, setVisible] = useState(false)
     const [typeVisible, setTypeVisible] = useState(false)
     const categoryList  = useSelector((state: RootState) => state.category.category)
     const titleField = _.find(item?.fields, field => field.isTitle);
+    const isTablet = DeviceInfo.isTablet();
     const dispatch = useDispatch()
     
     const setCategoryName = (text: string) => {
@@ -106,7 +110,7 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
         />
 
     return (
-        <Box backgroundColor='white' p='3' shadow='5' mb='3' borderRadius={6}>
+        <Box backgroundColor='white' p='3' shadow='5' mb='3' borderRadius={6}  style={isTablet ? {width: width / 2 - 16, marginHorizontal: 8} : {flex: 1}}>
             <Text style={{fontSize: 18, fontWeight: 'bold', marginBottom: 10}}>{item?.title}</Text>
             <BaseInput 
                 label='Category Name'
@@ -128,10 +132,10 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
             </View>
             <ModalSelect 
                 visible={visible} 
-                title="SSelect Field To Be Title"
+                title="Select Field To Be Title"
                 onClose={() => setVisible(false)}
                 data={categoryList[index].fields} 
-                onSelect={(item, index) => onSelectTitle(item, index)}
+                onSelect={(item: any, index: number) => onSelectTitle(item, index)}
             />
             <ModalSelect 
                 visible={typeVisible} 
@@ -146,8 +150,15 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
 
 export default CategoryCard
 
+interface ModalProps {
+    visible: boolean;
+    title: string;
+    data: any;
+    onClose: () => void;
+    onSelect: (item: any, index: number) => void;
+}
 
-const ModalSelect = ({visible, title, onClose, data, onSelect}) => {
+const ModalSelect: React.FC<ModalProps> = ({visible, title, onClose, data, onSelect}) => {
     return (
         <Modal
             animationIn="slideInUp"
@@ -156,7 +167,7 @@ const ModalSelect = ({visible, title, onClose, data, onSelect}) => {
             style={{}}>
             <View style={styles.modalView}>
                 <Text style={{fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 16}}>{title}</Text>
-                {data?.map((item, index) => (
+                {data?.map((item: any, index: string) => (
                     <BaseButton transparent title={item.value || item} onPress={() => onSelect(item, index)}/>
                 ))}
             </View>

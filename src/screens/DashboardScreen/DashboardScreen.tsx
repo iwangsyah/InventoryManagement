@@ -3,6 +3,7 @@ import React from "react";
 import { Dimensions, FlatList, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useDispatch, useSelector } from "react-redux";
+import DeviceInfo from 'react-native-device-info';
 import BaseButton from "../../components/BaseButton";
 import ItemCard from "../../components/ItemCard";
 import { CategoryItemProps, ItemProps } from "../../interfaces/Category";
@@ -10,6 +11,7 @@ import { RootState } from "../../redux/store";
 
 const DashboardScreen = () => {
     const categoryList  = useSelector((state: RootState) => state.category.category)
+    const isTablet = DeviceInfo.isTablet();
     const dispatch = useDispatch()
 
     const onAddNewItem = (categoryIndex: number) => {
@@ -37,34 +39,36 @@ const DashboardScreen = () => {
     const renderCategory = ({ item, index } : {item: CategoryItemProps, index: number}) => {
         const categoryIndex = index
         return (
-            <View>
+            <View style={{flex: 1}}>
                 <View style={styles.headerContainer}>
                     <Text numberOfLines={2} style={{flex: 1, fontSize: 26, fontWeight: 'bold'}}>{item.title}</Text>
                     <BaseButton title='ADD NEW ITEM' onPress={() => onAddNewItem(categoryIndex)} />
                 </View>
                 <FlatList
                     data={item.items}
+                    numColumns={isTablet ? 2 : 1}
                     renderItem={({item, index} : {item: ItemProps, index: number}) => (
                         renderItem(item, index, categoryIndex)
                     )}
+                    contentContainerStyle={{paddingVertical: 16, paddingHorizontal: isTablet ? 0 : 16}}
                     keyExtractor={(_, index) => String(index)}
-                    contentContainerStyle={{padding: 16}}
+                    ListEmptyComponent={() => <Text style={styles.emptyText}>No items to display</Text>}
                 />
             </View>
         )
     }
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <View>
             <KeyboardAwareScrollView extraScrollHeight={20}>
                 <FlatList
                     data={categoryList}
                     renderItem={renderCategory}
                     keyExtractor={(_, index) => String(index)}
-                    contentContainerStyle={{padding: 16}}
+                    contentContainerStyle={{paddingVertical: 16, paddingHorizontal: isTablet ? 0 : 16}}
                 />
             </KeyboardAwareScrollView>
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -82,6 +86,11 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         borderBottomWidth: 1,
         borderColor: 'lightgrey'
+    },
+    emptyText: {
+        textAlign: 'center', 
+        color: '#696969', 
+        marginVertical: 16
     }
 })
 
