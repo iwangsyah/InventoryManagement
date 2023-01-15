@@ -17,6 +17,7 @@ interface Props {
 
 const CategoryCard: React.FC<Props> = ({item, index}) => {
     const [visible, setVisible] = useState(false)
+    const [typeVisible, setTypeVisible] = useState(false)
     const categoryList  = useSelector((state: RootState) => state.category.category)
     const titleField = _.find(item?.fields, field => field.isTitle);
     const dispatch = useDispatch()
@@ -48,12 +49,13 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
         dispatch({type: 'SET_CATEGORY', payload: {category: newCategoryList}})
     }
 
-    const onAddField = () => {
+    const onAddField = (type: string) => {
         const newCategoryList = [...categoryList];
         const newCategory = {...item};  
         const lastFieldId = _.last(newCategory.fields)?.id || 0;
-        newCategory.fields.push({id: newCategoryList.id * 10 + (lastFieldId + 1),  type: 'text', value: '', isTitle: false})
+        newCategory.fields.push({id: newCategoryList.id * 10 + (lastFieldId + 1),  type, value: '', isTitle: false})
         dispatch({type: 'SET_CATEGORY', payload: {category: newCategoryList}})
+        setTypeVisible(false)
     }
 
     const onDeleteCategory = () => {
@@ -117,7 +119,7 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
             />
             <BaseButton title={`TITLE FIELD : ${titleField ? titleField.value : 'UNNAMED FIELD'}`} onPress={() => setVisible(true)} />
             <View style={{flexDirection: 'row'}}>
-                <BaseButton transparent title='ADD NEW FIELD' onPress={onAddField}/>
+                <BaseButton transparent title='ADD NEW FIELD' onPress={() => setTypeVisible(true)}/>
                 <Pressable style={styles.removeButton} onPress={onDeleteCategory}>
                     <DeleteIcon size={16} color='#5D3FD3' />
                     <Text style={styles.removeText}>REMOVE</Text>
@@ -125,9 +127,17 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
             </View>
             <ModalSelect 
                 visible={visible} 
+                title="SSelect Field To Be Title"
                 onClose={() => setVisible(false)}
                 data={categoryList[index].fields} 
                 onSelect={(item, index) => onSelectTitle(item, index)}
+            />
+            <ModalSelect 
+                visible={typeVisible} 
+                title="Select Field Type"
+                onClose={() => setTypeVisible(false)}
+                data={['Text', 'Number', 'Checkbox', 'Date']} 
+                onSelect={(item: string) => onAddField(item)}
             />
         </Box>
     )
@@ -136,7 +146,7 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
 export default CategoryCard
 
 
-const ModalSelect = ({visible, onClose, data, onSelect}) => {
+const ModalSelect = ({visible, title, onClose, data, onSelect}) => {
     return (
         <Modal
             animationIn="slideInUp"
@@ -144,9 +154,9 @@ const ModalSelect = ({visible, onClose, data, onSelect}) => {
             onBackdropPress={onClose}
             style={{}}>
             <View style={styles.modalView}>
-                <Text style={{fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 16}}>Select field to be title</Text>
+                <Text style={{fontSize: 20, fontWeight: '600', textAlign: 'center', marginBottom: 16}}>{title}</Text>
                 {data?.map((item, index) => (
-                    <BaseButton transparent title={item.value} onPress={() => onSelect(item, index)}/>
+                    <BaseButton transparent title={item.value || item} onPress={() => onSelect(item, index)}/>
                 ))}
             </View>
         </Modal>
