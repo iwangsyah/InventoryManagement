@@ -40,7 +40,7 @@ const DashboardScreen = () => {
         const categoryIndex = index
         return (
             <View style={{flex: 1}}>
-                <View style={styles.headerContainer}>
+                <View style={[styles.headerContainer, {paddingHorizontal: isTablet ? 8 : 16}]}>
                     <Text numberOfLines={2} style={{flex: 1, fontSize: 26, fontWeight: 'bold'}}>{item.title}</Text>
                     <BaseButton title='ADD NEW ITEM' onPress={() => onAddNewItem(categoryIndex)} />
                 </View>
@@ -58,7 +58,7 @@ const DashboardScreen = () => {
     }
 
     return (
-        <View>
+        <View style={{flex: 1}}>
             <KeyboardAwareScrollView extraScrollHeight={20}>
                 <FlatList
                     data={categoryList}
