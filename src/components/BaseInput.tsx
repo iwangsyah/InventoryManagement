@@ -12,8 +12,15 @@ interface InputProps extends TextInputProps {
 
 type Ref = TextInput;
 
+
+
 export const BaseInput = forwardRef<Ref, InputProps>((props, ref) => {
   const [focus, setFocus] = useState<boolean>(false);
+  
+  let keyboardType = 'default'
+  if (props.type == 'Number') {
+    keyboardType = 'numeric'
+  }
 
   return (
    <View style={{marginTop: 10}}>
@@ -25,6 +32,7 @@ export const BaseInput = forwardRef<Ref, InputProps>((props, ref) => {
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             placeholder={props.placeholder}
+            keyboardType={keyboardType}
             {...props}
           />
           {props.type && <Text style={styles.inputType}>{props.type.toUpperCase()}</Text>}

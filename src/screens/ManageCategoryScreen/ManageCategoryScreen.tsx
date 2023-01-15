@@ -33,7 +33,7 @@ const ManageCategoryScreen = () => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView extraScrollHeight={20}>
                 <FlatList
                     data={categoryList}
                     renderItem={renderCategory}

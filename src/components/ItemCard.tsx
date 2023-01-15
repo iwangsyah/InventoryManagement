@@ -40,6 +40,7 @@ const ItemCard: React.FC<Props> = ({item, index, categoryIndex}) => {
             label={item.name}
             onChangeText={(text) => onChangeText(text, index)} 
             value={item.value}
+            type={item.type}
         />
 
     return (

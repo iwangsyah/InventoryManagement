@@ -49,7 +49,7 @@ const CategoryScreen = ({route, navigation}: Props) => {
                 <Text numberOfLines={2} style={{flex: 1, fontSize: 26, fontWeight: 'bold'}}>{categoryList[categoryIndex].title}</Text>
                 <BaseButton title='ADD NEW ITEM' onPress={onAddNewItem} />
             </View>
-            <KeyboardAwareScrollView>
+            <KeyboardAwareScrollView extraScrollHeight={80}>
                 <FlatList
                     data={categoryList[categoryIndex]?.items}
                     renderItem={renderCategory}
