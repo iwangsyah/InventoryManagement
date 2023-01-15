@@ -64,15 +64,6 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
         dispatch({type: 'SET_CATEGORY', payload: {category: newCategoryList}})
     }
 
-    const renderFields = ({item, index}: {item: CateoryItemFieldProps, index: number}) => 
-        <BaseInput 
-            type={item.type}
-            placeholder='Input Field Name'
-            onChangeText={(text) => onChangeText(text, index)} 
-            value={item.value}
-            onDelete={() => onDeleteField(index)}
-        />
-
     const onSelectTitle = (itemTitle: any, indexField: number) => {
         
         const indexCategory = index
@@ -103,6 +94,16 @@ const CategoryCard: React.FC<Props> = ({item, index}) => {
         dispatch({type: 'SET_CATEGORY', payload: {category: newCategoryList}})
         setVisible(false)
     }
+
+    const renderFields = ({item, index}: {item: CateoryItemFieldProps, index: number}) => 
+        <BaseInput 
+            showType
+            type={item.type}
+            placeholder='Input Field Name'
+            onChangeText={(text) => onChangeText(text, index)} 
+            value={item.value}
+            onDelete={() => onDeleteField(index)}
+        />
 
     return (
         <Box backgroundColor='white' p='3' shadow='5' mb='3' borderRadius={6}>

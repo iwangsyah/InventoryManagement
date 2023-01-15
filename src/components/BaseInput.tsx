@@ -7,6 +7,7 @@ interface InputProps extends TextInputProps {
     label?: string;
     placeholder?: string;
     onDelete?: () => void;
+    showType?: boolean;
     type?: string
 }
 
@@ -35,7 +36,7 @@ export const BaseInput = forwardRef<Ref, InputProps>((props, ref) => {
             keyboardType={keyboardType}
             {...props}
           />
-          {props.type && <Text style={styles.inputType}>{props.type.toUpperCase()}</Text>}
+          {props.showType && <Text style={styles.inputType}>{props.type.toUpperCase()}</Text>}
         </View>
         {props.onDelete && (
           <Pressable style={{paddingHorizontal: 16}} onPress={props.onDelete}>
